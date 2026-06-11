@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Profe Nico – مدرس الإسبانية</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:#f7f3ee;color:#1a1a1a;display:flex;flex-direction:column;height:100vh;overflow:hidden}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-thumb{background:#d0c8be;border-radius:3px}
+
+.header{background:#c23b22;padding:14px 20px;display:flex;align-items:center;gap:12px;box-shadow:0 2px 12px rgba(194,59,34,.3);flex-shrink:0}
+.av{width:44px;height:44px;background:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.h-title{font-family:'Playfair Display',serif;color:#fff;font-size:1.1rem}
+.h-sub{color:rgba(255,255,255,.75);font-size:.72rem}
+.hright{margin-left:auto;display:flex;align-items:center;gap:10px}
+.wave{display:flex;gap:2px;align-items:center}
+.wave span{display:block;width:3px;background:rgba(255,255,255,.85);border-radius:2px;animation:wv .8s infinite ease-in-out}
+@keyframes wv{0%,100%{transform:scaleY(.3)}50%{transform:scaleY(1)}}
+.tog-wrap{display:flex;align-items:center;gap:6px;color:rgba(255,255,255,.8);font-size:.75rem;cursor:pointer}
+.tog{width:38px;height:20px;background:rgba(255,255,255,.25);border-radius:10px;position:relative;transition:background .2s;cursor:pointer;border:none;flex-shrink:0}
+.tog.on{background:#fff}
+.tog::after{content:'';position:absolute;width:14px;height:14px;background:#c23b22;border-radius:50%;top:3px;left:3px;transition:left .2s}
+.tog.on::after{left:21px}
+
+.chat{flex:1;overflow-y:auto;padding:18px 14px;display:flex;flex-direction:column;gap:14px;max-width:680px;width:100%;margin:0 auto}
+.row{display:flex;align-items:flex-end;gap:8px}
+.row.user{flex-direction:row-reverse}
+.mini-av{width:30px;height:30px;border-radius:50%;background:#e8e0d6;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.row.user .mini-av{background:#c23b22;color:#fff;font-weight:600;font-size:10px}
+.bub{max-width:76%;padding:11px 15px;border-radius:18px;line-height:1.65;font-size:.9rem}
+.bub.bot{background:#fff;border-bottom-left-radius:4px;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.bub.user{background:#c23b22;color:#fff;border-bottom-right-radius:4px}
+.bub p{margin-bottom:4px}.bub p:last-child{margin-bottom:0}
+.corr{background:#fff8e1;border-left:3px solid #f9a825;padding:5px 10px;border-radius:4px;margin:5px 0;font-size:.82rem;color:#5d4037}
+.vocab{background:#e8f5e9;border-left:3px solid #43a047;padding:5px 10px;border-radius:4px;margin:5px 0;font-size:.82rem;color:#2e7d32}
+.dots{display:flex;gap:5px;align-items:center;padding:12px 15px}
+.dot{width:7px;height:7px;background:#c23b22;border-radius:50%;animation:bounce 1.2s infinite}
+.dot:nth-child(2){animation-delay:.2s}.dot:nth-child(3){animation-delay:.4s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.5}30%{transform:translateY(-6px);opacity:1}}
+
+.sugs{display:flex;flex-wrap:wrap;gap:7px;max-width:680px;width:100%;margin:0 auto;padding:4px 14px 8px;flex-shrink:0}
+.sug{background:#fff;border:1.5px solid #e0d6cc;color:#c23b22;padding:5px 13px;border-radius:20px;font-size:.79rem;cursor:pointer;font-family:inherit;transition:all .18s}
+.sug:hover{background:#c23b22;color:#fff;border-color:#c23b22}
+
+.err{background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:8px 14px;font-size:.8rem;color:#856404;text-align:center;margin:0 14px 6px;flex-shrink:0;display:none}
+
+.voice-area{background:#fff;border-top:1px solid #e8e0d6;padding:16px 14px 12px;display:flex;flex-direction:column;align-items:center;gap:11px;max-width:680px;width:100%;margin:0 auto;flex-shrink:0}
+.tbox{width:100%;max-width:480px;min-height:38px;background:#faf8f5;border:1.5px dashed #d0c8be;border-radius:12px;padding:8px 14px;font-size:.87rem;color:#666;text-align:center;font-style:italic;transition:border .2s}
+.tbox.active{border-color:#e53935;color:#1a1a1a;font-style:normal}
+.mic-row{display:flex;align-items:center;gap:16px}
+.mic{width:70px;height:70px;border-radius:50%;border:none;cursor:pointer;font-size:26px;background:#c23b22;color:#fff;display:flex;align-items:center;justify-content:center;transition:all .2s;box-shadow:0 4px 16px rgba(194,59,34,.3);user-select:none;-webkit-user-select:none}
+.mic.on{background:#e53935;animation:pulse 1s infinite;box-shadow:0 0 0 12px rgba(229,57,53,.15)}
+.mic:disabled{background:#bbb;cursor:not-allowed;box-shadow:none;animation:none}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+.send-v{height:42px;padding:0 18px;background:#c23b22;color:#fff;border:none;border-radius:21px;font-family:inherit;font-size:.87rem;cursor:pointer;display:flex;align-items:center;gap:6px;transition:background .18s}
+.send-v:hover{background:#a82f1a}
+.hint{font-size:.75rem;color:#aaa}
+
+.input-bar{background:#fff;border-top:1px solid #e8e0d6;padding:10px 14px;display:flex;gap:8px;align-items:flex-end;max-width:680px;width:100%;margin:0 auto;flex-shrink:0}
+.input-bar textarea{flex:1;border:1.5px solid #e0d6cc;border-radius:12px;padding:9px 13px;font-family:inherit;font-size:.9rem;resize:none;outline:none;min-height:40px;max-height:90px;background:#faf8f5;color:#1a1a1a;transition:border .2s}
+.input-bar textarea:focus{border-color:#c23b22}
+.send-t{width:40px;height:40px;background:#c23b22;border:none;border-radius:50%;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;transition:background .18s}
+.send-t:hover{background:#a82f1a}
+.send-t:disabled{background:#ccc;cursor:not-allowed}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="av">🧑‍🏫</div>
+  <div>
+    <div class="h-title">Profe Nico</div>
+    <div class="h-sub">مدرس الإسبانية بالصوت • Voice Spanish Tutor</div>
+  </div>
+  <div class="hright">
+    <div class="wave" id="waveEl" style="display:none">
+      <span style="height:14px;animation-delay:0s"></span>
+      <span style="height:20px;animation-delay:.1s"></span>
+      <span style="height:10px;animation-delay:.2s"></span>
+      <span style="height:18px;animation-delay:.15s"></span>
+      <span style="height:12px;animation-delay:.05s"></span>
+    </div>
+    <div class="tog-wrap" onclick="toggleVoice()">
+      <span>🔊</span>
+      <button class="tog on" id="togBtn"></button>
+    </div>
+  </div>
+</div>
+
+<div class="chat" id="chat"></div>
+
+<div class="sugs" id="sugs">
+  <button class="sug" onclick="send('Hola, ¿cómo estás?')">Hola, ¿cómo estás?</button>
+  <button class="sug" onclick="send('Me llamo Ahmed')">Me llamo Ahmed</button>
+  <button class="sug" onclick="send('¿Cómo se dice gracias?')">¿Cómo se dice gracias?</button>
+  <button class="sug" onclick="send('Quiero aprender español')">Quiero aprender español</button>
+</div>
+
+<div class="err" id="errBox"></div>
+
+<div class="voice-area">
+  <div class="tbox" id="tbox">اضغط الميكروفون وتكلم بالإسبانية أو العربية</div>
+  <div class="mic-row">
+    <button class="mic" id="micBtn">🎤</button>
+    <button class="send-v" id="sendV" style="display:none" onclick="sendTranscript()">➤ إرسال</button>
+  </div>
+  <div class="hint" id="hint">اضغط مع الاستمرار على الميكروفون للتكلم</div>
+</div>
+
+<div class="input-bar">
+  <textarea id="txt" rows="1" placeholder="أو اكتب هنا... / O escribe aquí..."></textarea>
+  <button class="send-t" id="sendTxt" onclick="sendText()">➤</button>
+</div>
+
+<script>
+const SYSTEM = `Eres un profesor de español amigable y paciente llamado "Profe Nico". Tu misión es ayudar al usuario a aprender español mediante conversación.
+Reglas:
+1. Responde SIEMPRE en español. Si el usuario habla árabe o inglés, entiéndelo y responde en español.
+2. Corrige los errores del usuario de forma gentil (usa: 💡 Corrección: ...).
+3. Usa vocabulario simple. Adapta el nivel.
+4. Incluye siempre una pregunta para continuar.
+5. A veces incluye una palabra nueva (usa: 📖 Palabra nueva: ...).
+6. Sé cálido, motivador, usa emojis ocasionalmente.
+7. Respuestas cortas y claras.`;
+
+let msgs = [];
+let voiceOn = true;
+let rec = null;
+let holding = false;
+let transcript = "";
+
+const chat = document.getElementById("chat");
+const micBtn = document.getElementById("micBtn");
+const tbox = document.getElementById("tbox");
+const sendV = document.getElementById("sendV");
+const hint = document.getElementById("hint");
+const errBox = document.getElementById("errBox");
+const waveEl = document.getElementById("waveEl");
+const togBtn = document.getElementById("togBtn");
+const txtArea = document.getElementById("txt");
+
+// ── MIC EVENTS ──
+micBtn.addEventListener("mousedown", e => { e.preventDefault(); startRec(); });
+micBtn.addEventListener("mouseup",   e => { e.preventDefault(); stopRec(); });
+micBtn.addEventListener("touchstart", e => { e.preventDefault(); startRec(); }, {passive:false});
+micBtn.addEventListener("touchend",   e => { e.preventDefault(); stopRec(); },  {passive:false});
+
+txtArea.addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); sendText(); }
+});
+
+function toggleVoice() {
+  voiceOn = !voiceOn;
+  togBtn.classList.toggle("on", voiceOn);
+  if (!voiceOn) { speechSynthesis.cancel(); showWave(false); }
+}
+
+function showError(msg, dur=5000) {
+  errBox.textContent = msg; errBox.style.display = "block";
+  setTimeout(() => errBox.style.display = "none", dur);
+}
+
+function showWave(on) { waveEl.style.display = on ? "flex" : "none"; }
+
+// ── SPEECH RECOGNITION ──
+function startRec() {
+  if (holding) return;
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) { showError("⚠️ يحتاج متصفح Chrome أو Edge"); return; }
+
+  holding = true;
+  speechSynthesis.cancel(); showWave(false);
+  errBox.style.display = "none";
+
+  rec = new SR();
+  rec.lang = "es-ES";
+  rec.interimResults = true;
+  rec.continuous = false;
+
+  rec.onstart = () => {
+    transcript = "";
+    micBtn.classList.add("on"); micBtn.textContent = "🔴";
+    tbox.textContent = "🎤 أنا أسمعك..."; tbox.classList.add("active");
+    sendV.style.display = "none";
+    hint.textContent = "ارفع إصبعك عند الانتهاء من الكلام";
+  };
+
+  rec.onresult = e => {
+    transcript = Array.from(e.results).map(r => r[0].transcript).join("");
+    tbox.textContent = transcript;
+    if (e.results[e.results.length-1].isFinal) sendV.style.display = "flex";
+  };
+
+  rec.onend = () => {
+    holding = false;
+    micBtn.classList.remove("on"); micBtn.textContent = "🎤";
+    tbox.classList.remove("active");
+    hint.textContent = "اضغط مع الاستمرار على الميكروفون للتكلم";
+    if (transcript) sendV.style.display = "flex";
+  };
+
+  rec.onerror = err => {
+    holding = false;
+    micBtn.classList.remove("on"); micBtn.textContent = "🎤";
+    tbox.classList.remove("active");
+    if (err.error === "not-allowed") {
+      showError("🔒 الميكروفون محظور. انظر التعليمات أدناه.", 10000);
+      showMicHelp();
+    } else if (err.error === "network") {
+      showError("⚠️ خطأ في الشبكة — تأكد من الإنترنت وأعد المحاولة");
+    } else {
+      showError("خطأ في الميكروفون: " + err.error);
+    }
+  };
+
+  rec.start();
+}
+
+function stopRec() { if (rec) rec.stop(); holding = false; }
+
+function showMicHelp() {
+  const helpDiv = document.createElement("div");
+  helpDiv.style.cssText = "background:#fff3e0;border:1px solid #ff9800;border-radius:10px;padding:14px;margin:8px 14px;font-size:.82rem;line-height:1.8;color:#e65100;flex-shrink:0";
+  helpDiv.innerHTML = `
+    <b>🔓 كيف تفعّل الميكروفون في Chrome:</b><br>
+    1. انظر لأيقونة 🔒 أو 🎤 في شريط العنوان (يسار أو يمين)<br>
+    2. اضغط عليها ← اختر <b>"الميكروفون"</b> ← <b>"السماح"</b><br>
+    3. أعد تحميل الصفحة (F5)<br><br>
+    <b>أو:</b> اذهب لـ chrome://settings/content/microphone وأضف هذا الموقع
+  `;
+  const errBox2 = document.getElementById("errBox");
+  errBox2.parentNode.insertBefore(helpDiv, errBox2.nextSibling);
+  setTimeout(() => helpDiv.remove(), 15000);
+}
+
+// ── TTS ──
+function speak(text) {
+  if (!voiceOn) return;
+  speechSynthesis.cancel();
+  const clean = text.replace(/💡[^\n]*/g,"").replace(/📖[^\n]*/g,"").replace(/\s+/g," ").trim();
+  const u = new SpeechSynthesisUtterance(clean);
+  u.lang = "es-ES"; u.rate = 0.87; u.pitch = 1.05;
+  const vs = speechSynthesis.getVoices();
+  const esV = vs.find(v => v.lang.startsWith("es")) || vs.find(v => v.lang.includes("es"));
+  if (esV) u.voice = esV;
+  u.onstart = () => showWave(true);
+  u.onend = u.onerror = () => showWave(false);
+  speechSynthesis.speak(u);
+}
+
+// ── CHAT ──
+function addBubble(role, text) {
+  const row = document.createElement("div");
+  row.className = "row" + (role==="user"?" user":"");
+  const av = document.createElement("div");
+  av.className = "mini-av"; av.textContent = role==="user"?"أنت":"🧑‍🏫";
+  const bub = document.createElement("div");
+  bub.className = "bub " + (role==="user"?"user":"bot");
+
+  if (role === "assistant") {
+    text.split("\n").filter(Boolean).forEach(line => {
+      if (line.startsWith("💡")) {
+        const d = document.createElement("div"); d.className="corr"; d.textContent=line; bub.appendChild(d);
+      } else if (line.startsWith("📖")) {
+        const d = document.createElement("div"); d.className="vocab"; d.textContent=line; bub.appendChild(d);
+      } else {
+        const p = document.createElement("p"); p.textContent=line; bub.appendChild(p);
+      }
+    });
+  } else {
+    const p = document.createElement("p"); p.textContent=text; bub.appendChild(p);
+  }
+
+  row.appendChild(av); row.appendChild(bub);
+  chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+}
+
+function addTyping() {
+  const row = document.createElement("div"); row.className="row"; row.id="typing";
+  const av = document.createElement("div"); av.className="mini-av"; av.textContent="🧑‍🏫";
+  const bub = document.createElement("div"); bub.className="bub bot";
+  bub.innerHTML='<div class="dots"><div class="dot"></div><div class="dot"></div><div class="dot"></div></div>';
+  row.appendChild(av); row.appendChild(bub); chat.appendChild(row);
+  chat.scrollTop = chat.scrollHeight;
+}
+function removeTyping() { const el=document.getElementById("typing"); if(el) el.remove(); }
+
+// ── SEND ──
+async function send(text) {
+  if (!text || !text.trim()) return;
+  msgs.push({role:"user", content:text});
+  addBubble("user", text);
+  transcript=""; tbox.textContent="اضغط الميكروفون وتكلم بالإسبانية أو العربية";
+  sendV.style.display="none";
+  micBtn.disabled=true; document.getElementById("sendTxt").disabled=true;
+  addTyping();
+
+  try {
+    const res = await fetch("https://api.anthropic.com/v1/messages", {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        model:"claude-sonnet-4-20250514",
+        max_tokens:800,
+        system:SYSTEM,
+        messages:msgs.map(m=>({role:m.role,content:m.content}))
+      })
+    });
+    const data = await res.json();
+    const reply = data.content?.[0]?.text || "Lo siento, hubo un error.";
+    msgs.push({role:"assistant", content:reply});
+    removeTyping();
+    addBubble("assistant", reply);
+    speak(reply);
+  } catch(e) {
+    removeTyping();
+    addBubble("assistant","⚠️ خطأ في الاتصال — تأكد من الإنترنت وأعد المحاولة.");
+  } finally {
+    micBtn.disabled=false; document.getElementById("sendTxt").disabled=false;
+  }
+}
+
+function sendTranscript() { if(transcript.trim()) send(transcript.trim()); }
+
+function sendText() {
+  const t = txtArea.value.trim();
+  if(t){ send(t); txtArea.value=""; }
+}
+
+// ── INIT ──
+window.addEventListener("load", () => {
+  const g = "¡Hola! 👋 Soy Profe Nico, tu profesor de español. Pulsa el micrófono y habla conmigo. ¿Cómo te llamas?";
+  msgs.push({role:"assistant", content:g});
+  addBubble("assistant", g);
+  speechSynthesis.onvoiceschanged = () => {};
+  setTimeout(() => speak(g), 900);
+});
+</script>
+</body>
+</html>
